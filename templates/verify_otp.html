@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP - AI Resume Builder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>Verify Your Identity</h1>
+                <p>Enter the OTPs sent to your email and phone</p>
+            </div>
+
+            {% if error %}
+            <div class="alert alert-error">{{ error }}</div>
+            {% endif %}
+
+            <form method="post" class="auth-form">
+                <div class="form-group">
+                    <label for="email_otp">Email OTP</label>
+                    <input 
+                        type="text" 
+                        id="email_otp" 
+                        name="email_otp" 
+                        required 
+                        placeholder="6-digit code from email"
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_otp">Phone OTP</label>
+                    <input 
+                        type="text" 
+                        id="phone_otp" 
+                        name="phone_otp" 
+                        required 
+                        placeholder="6-digit code from SMS"
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    Verify & Continue
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Didn't receive OTP? <a href="#" id="resendOTP">Resend</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('resendOTP').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('OTP resent successfully!');
+        });
+    </script>
+</body>
+</html>

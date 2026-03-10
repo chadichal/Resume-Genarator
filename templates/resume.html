@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Build Resume – Generative AI Intern</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+</head>
+<body>
+<div class="page">
+  <header class="navbar">
+    <div class="navbar-brand">AI Resume Builder</div>
+    <nav class="nav-links">
+      <a href="{{ url_for('index') }}">Home</a>
+      <span class="nav-user">{{ user_name or "" }}</span>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+  </header>
+  <main class="main">
+    <div class="card card-wide">
+      <div class="card-header">
+        <div class="card-title">Professional Resume Builder</div>
+        <div class="card-subtitle">
+          Choose Fresher or Experienced and pick a template inspired by top companies.
+        </div>
+      </div>
+      <form method="post" action="{{ url_for('resume_builder') }}" enctype="multipart/form-data">
+        <div class="form-section">
+          <h3 class="section-title">Candidate Level & Template</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="resume_level">Candidate level</label>
+              <select id="resume_level" name="resume_level" class="form-select">
+                <option value="fresher">Fresher (1-page)</option>
+                <option value="experienced">Experienced (2-page)</option>
+              </select>
+            </div>
+            <div class="form-group" id="years_experience_group" style="display: none;">
+              <label for="years_experience">Total experience (years)</label>
+              <input id="years_experience" name="years_experience" type="number" step="0.1" min="0" class="form-control" placeholder="e.g. 2.5" />
+            </div>
+            <div class="form-group">
+              <label for="template_type">Resume template</label>
+              <select id="template_type" name="template_type" class="form-select">
+                <optgroup label="Fresher templates">
+                  <option value="fresher_modern">Modern (Google-style)</option>
+                  <option value="fresher_classic">Classic (Microsoft-style)</option>
+                  <option value="fresher_minimal">Minimal (Amazon-style)</option>
+                  <option value="fresher_creative">Creative (Apple-style)</option>
+                  <option value="fresher_professional">Professional (Meta-style)</option>
+                </optgroup>
+                <optgroup label="Experienced templates">
+                  <option value="experienced_modern">Modern (Google-style)</option>
+                  <option value="experienced_classic">Classic (Microsoft-style)</option>
+                  <option value="experienced_minimal">Minimal (Amazon-style)</option>
+                  <option value="experienced_executive">Executive (Apple-style)</option>
+                  <option value="experienced_senior">Senior (Meta-style)</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="section-title">Basic info</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="full_name">Name</label>
+              <input id="full_name" name="full_name" type="text" class="form-control" value="{{ user_name or '' }}" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone number</label>
+              <input id="phone" name="phone" type="text" class="form-control" required placeholder="+91 98765 43210" />
+            </div>
+            <div class="form-group">
+              <label for="role_title">Target role</label>
+              <input id="role_title" name="role_title" type="text" class="form-control" value="{{ default_role_title or 'Generative AI Intern' }}" />
+            </div>
+            <div class="form-group">
+              <label for="location">Location</label>
+              <input id="location" name="location" type="text" class="form-control" placeholder="City, Country" />
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="section-title">Profile photo (Passport Size)</h3>
+          <div class="form-group profile-upload-wrap">
+            <label for="profile_image">Upload passport size photo (2x2 inches, JPG/PNG)</label>
+            <input id="profile_image" name="profile_image" type="file" class="form-control" accept="image/jpeg,image/jpg,image/png,image/gif" />
+            <span class="profile-hint">JPG, PNG or GIF. Max 4MB. Will be resized to passport size in PDF.</span>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="section-title">Summary</h3>
+          <div class="form-group">
+            <label for="summary">Professional summary</label>
+            <textarea id="summary" name="summary" rows="4" class="form-control" placeholder="2–4 lines summarizing your background, strengths, and career goals."></textarea>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="section-title">Skills</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="skills">Technical skills</label>
+              <textarea id="skills" name="skills" class="form-control" placeholder="Python, PyTorch, TensorFlow, Transformers, LLMs, RAG, Prompt Engineering, SQL..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="soft_skills">Soft skills</label>
+              <textarea id="soft_skills" name="soft_skills" class="form-control" placeholder="Communication, Teamwork, Problem-solving, Leadership, Time management..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="section-title">Experience</h3>
+          <div class="form-group">
+            <label for="experience">Professional experience</label>
+            <textarea id="experience" name="experience" class="form-control" placeholder="Company Name | Role | Duration&#10;- Key achievement or responsibility&#10;- Impact with metrics..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="projects">Projects</label>
+            <textarea id="projects" name="projects" class="form-control" placeholder="Project name | Tech stack | Duration&#10;- Description and outcome..."></textarea>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="section-title">Education & Certificates</h3>
+          <div class="form-group">
+            <label for="education">Education</label>
+            <textarea id="education" name="education" class="form-control" placeholder="Degree | Institution | Year&#10;Relevant coursework: ML, NLP..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="certificates">Certificates</label>
+            <textarea id="certificates" name="certificates" class="form-control" placeholder="Certificate name | Issuer | Year&#10;e.g. AWS ML Specialty, Google Cloud Professional..."></textarea>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" type="submit">Build resume & generate PDF</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

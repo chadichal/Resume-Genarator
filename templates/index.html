@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Resume Builder – Generative AI Intern</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+<div class="page">
+  <header class="navbar">
+    <div class="navbar-brand">AI Resume Builder</div>
+    <nav class="nav-links">
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}">Register</a>
+    </nav>
+  </header>
+  <main class="main">
+    <div class="card">
+      <div class="hero">
+        <div>
+          <h1 class="hero-heading">Build a standout Generative AI Intern resume.</h1>
+          <p class="hero-subheading">
+            Professional templates tailored for fresher and experienced candidates
+            targeting Generative AI, LLMs, and Machine Learning roles.
+          </p>
+          <div class="hero-pills">
+            <span class="pill">Profile photo</span>
+            <span class="pill">Google / Microsoft / Amazon / Apple / Meta-style</span>
+            <span class="pill">Fresher (1 page)</span>
+            <span class="pill">Experienced (2 pages)</span>
+            <span class="pill">PDF download</span>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="{{ url_for('register') }}">Get started</a>
+            <a class="btn btn-outline" href="{{ url_for('login') }}">Already have an account?</a>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <div class="hero-panel-title">What you get</div>
+          <ul class="hero-panel-list">
+            <li>Name, Email, Phone, Profile photo, Summary, Technical & soft skills</li>
+            <li>Experience, Education, Certificates</li>
+            <li>Top-company templates: Google, Microsoft, Amazon, Apple, Meta style</li>
+            <li>One-click PDF export and auto-save to database</li>
+          </ul>
+          <div style="font-size: 0.8rem; color: #6b7280;">
+            Start with your details, pick your level, and download a polished PDF resume in seconds.
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

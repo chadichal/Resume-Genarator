@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Preview Resume – {{ resume.full_name }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+<div class="page">
+  <header class="navbar">
+    <div class="navbar-brand">AI Resume Builder</div>
+    <nav class="nav-links">
+      <a href="{{ url_for('resume_builder') }}">Edit resume</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+  </header>
+  <main class="main">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Preview: {{ resume.role_title }}</div>
+        <div class="card-subtitle">
+          Verify and download your PDF. The resume is saved in the database.
+        </div>
+      </div>
+      <div class="preview-card">
+        <div class="preview-header">
+          {% if resume.profile_image %}
+          <img class="preview-photo" src="{{ url_for('serve_upload', filename=resume.profile_image) }}" alt="Profile" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" />
+          {% endif %}
+          <div>
+            <div class="preview-heading">{{ resume.full_name }}</div>
+            <div class="preview-meta">
+              {{ resume.role_title }} · {{ resume.email }} · {{ resume.phone }}
+              {% if resume.location %} · {{ resume.location }}{% endif %}
+            </div>
+          </div>
+        </div>
+        {% if resume.summary %}
+        <div class="preview-section-title">Professional Summary</div>
+        <div class="preview-text">{{ resume.summary }}</div>
+        {% endif %}
+        {% if resume.skills %}
+        <div class="preview-section-title">Key Skills (Generative AI / ML)</div>
+        <div class="preview-text">{{ resume.skills }}</div>
+        {% endif %}
+        {% if resume.is_fresher %}
+          {% if resume.projects %}
+          <div class="preview-section-title">Academic / Personal Projects</div>
+          <div class="preview-text">{{ resume.projects }}</div>
+          {% endif %}
+        {% else %}
+          {% if resume.experience %}
+          <div class="preview-section-title">Professional Experience</div>
+          <div class="preview-text">{{ resume.experience }}</div>
+          {% endif %}
+          {% if resume.projects %}
+          <div class="preview-section-title">Projects</div>
+          <div class="preview-text">{{ resume.projects }}</div>
+          {% endif %}
+        {% endif %}
+        {% if resume.education %}
+        <div class="preview-section-title">Education</div>
+        <div class="preview-text">{{ resume.education }}</div>
+        {% endif %}
+        {% if resume.certificates %}
+        <div class="preview-section-title">Certificates</div>
+        <div class="preview-text">{{ resume.certificates }}</div>
+        {% endif %}
+        {% if resume.soft_skills %}
+        <div class="preview-section-title">Soft Skills</div>
+        <div class="preview-text">{{ resume.soft_skills }}</div>
+        {% endif %}
+      </div>
+      <div class="btn-row">
+        {% if resume.pdf_path %}
+        <a class="btn btn-primary" href="{{ url_for('download_resume', resume_id=resume.id) }}">Download PDF</a>
+        {% endif %}
+        <a class="btn btn-outline" href="{{ url_for('resume_builder') }}">Back to editor</a>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

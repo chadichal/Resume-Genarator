@@ -1,0 +1,22 @@
+resume-builder-project/
+├── backend/
+│   ├── app.py               # Main Flask application + routes
+│   ├── models.py            # SQLAlchemy models (User, Resume)
+│   ├── pdf_utils.py         # PDF generation logic with ReportLab
+│   ├── algorithms.py        # Template selection & future ATS logic
+│   ├── modules.py           # ATS scoring + keyword matching
+│   └── run.py               # Entry point to run the app
+├── static/
+│   ├── css/
+│   │   └── styles.css
+│   └── js/
+│       └── app.js
+├── templates/
+│   ├── index.html
+│   ├── login.html
+│   ├── register.html
+│   ├── resume.html          # Main resume input form
+│   └── preview.html
+├── uploads/                 # Created at runtime – profile photos
+├── generated_pdfs/          # Created at runtime – output PDFs
+└── resume_builder.db        # SQLite database (created at runtime)
